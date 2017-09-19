@@ -1,0 +1,3 @@
+include README.rst buildout.cfg LICENSE version.txt requirements.txt ./bob/ip/tensorflow_extractor/data/checkpoint ./bob/ip/tensorflow_extractor/data/model.ckp.data-00000-of-00001 ./bob/ip/tensorflow_extractor/data/model.ckp.index ./bob/ip/tensorflow_extractor/data/model.ckp.meta
+recursive-include doc *.py *.rst
+recursive-include bob *.hdf5
