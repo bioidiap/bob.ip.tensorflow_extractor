@@ -30,7 +30,7 @@ features.
    >>> graph = scratch_network(inputs)
 
    >>> # loading my model and projecting
-   >>> filename = os.path.join(pkg_resources.resource_filename("bob.ip.tensorflow_extractor", 'data'), 'model.ckp.meta')
+   >>> filename = os.path.join(pkg_resources.resource_filename("bob.ip.tensorflow_extractor", 'data'), 'model.ckp')
    >>> extractor = bob.ip.tensorflow_extractor.Extractor(filename, inputs, graph)
    >>> extractor(images).shape
    (3, 10)
