@@ -3,4 +3,3 @@ bob.extension
 bob.io.base
 bob.io.image
 bob.db.mnist
-tensorflow
