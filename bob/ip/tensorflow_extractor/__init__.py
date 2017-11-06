@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 
+from .Extractor import Extractor
+from .InceptionResNet_v1 import InceptionResNet_v1
+
+
 def scratch_network(inputs, end_point="fc1", reuse = False):
 
     import tensorflow as tf
@@ -53,7 +57,6 @@ def download_file(url, out_file):
       with open(out_file, 'wb') as f:
         copyfileobj(response, f)
 
-from .Extractor import Extractor
 
 
 def get_config():

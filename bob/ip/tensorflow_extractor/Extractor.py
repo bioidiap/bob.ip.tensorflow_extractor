@@ -6,6 +6,7 @@
 
 import tensorflow as tf
 import os
+from tensorflow.python import debug as tf_debug
 
 
 class Extractor(object):
@@ -14,7 +15,7 @@ class Extractor(object):
 
     """
 
-    def __init__(self, checkpoint_filename, input_tensor, graph):
+    def __init__(self, checkpoint_filename, input_tensor, graph, debug=False):
         """Loads the tensorflow model
 
         Parameters
@@ -34,16 +35,20 @@ class Extractor(object):
         self.graph = graph
 
         # Initializing the variables of the current graph
-        self.session = tf.Session()
+        self.session = tf.Session()        
         self.session.run(tf.global_variables_initializer())
-
+        
         # Loading the last checkpoint and overwriting the current variables
         saver = tf.train.Saver()
-        
-        if os.path.splitext(checkpoint_filename)[1] == ".meta":
-            saver.restore(self.session, tf.train.latest_checkpoint(os.path.dirname(checkpoint_filename)))
+
+        if os.path.isdir(checkpoint_filename):
+            saver.restore(self.session, tf.train.latest_checkpoint(checkpoint_filename))
         else:
             saver.restore(self.session, checkpoint_filename)
+
+        # Activating the debug
+        if debug:
+            self.session = tf_debug.LocalCLIDebugWrapperSession(self.session)
 
 
     def __del__(self):
@@ -65,6 +70,5 @@ class Extractor(object):
             The features.
 
         """
-        
         return self.session.run(self.graph, feed_dict={self.input_tensor: data})
 
