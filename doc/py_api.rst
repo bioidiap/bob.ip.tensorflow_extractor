@@ -8,6 +8,7 @@ Classes
 
 .. autosummary::
     bob.ip.tensorflow_extractor.Extractor
+    bob.ip.tensorflow_extractor.FaceNet
 
 
 Detailed API

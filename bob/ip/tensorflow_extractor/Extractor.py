@@ -24,10 +24,10 @@ class Extractor(object):
             Path of your checkpoint. If the .meta file is providede the last checkpoint will be loaded.
 
         model :
-            input_tensor: tf.Tensor used as a data entrypoint. It can be a **tf.placeholder**, the 
+            input_tensor: tf.Tensor used as a data entrypoint. It can be a **tf.placeholder**, the
             result of **tf.train.string_input_producer**, etc
-                        
-        graph : 
+
+        graph :
             A tf.Tensor containing the operations to be executed
         """
 
@@ -35,13 +35,15 @@ class Extractor(object):
         self.graph = graph
 
         # Initializing the variables of the current graph
-        self.session = tf.Session()        
+        self.session = tf.Session()
         self.session.run(tf.global_variables_initializer())
-        
+
         # Loading the last checkpoint and overwriting the current variables
         saver = tf.train.Saver()
 
-        if os.path.isdir(checkpoint_filename):
+        if os.path.splitext(checkpoint_filename)[1] == ".meta":
+            saver.restore(self.session, tf.train.latest_checkpoint(os.path.dirname(checkpoint_filename)))
+        elif os.path.isdir(checkpoint_filename):
             saver.restore(self.session, tf.train.latest_checkpoint(checkpoint_filename))
         else:
             saver.restore(self.session, checkpoint_filename)

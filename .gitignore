@@ -11,5 +11,4 @@ src
 develop-eggs
 sphinx
 dist
-bob/ip/caffe_extractor/data/face_verification_experiment-master/
-bob/ip/caffe_extractor/data/vgg_face_caffe/
+bob/ip/tensorflow_extractor/data/FaceNet/

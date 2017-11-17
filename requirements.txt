@@ -3,3 +3,5 @@ bob.extension
 bob.io.base
 bob.io.image
 bob.db.mnist
+bob.ip.color
+numpy
