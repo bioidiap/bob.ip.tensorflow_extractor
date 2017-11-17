@@ -44,7 +44,15 @@ def get_model_filenames(model_dir):
 
 class FaceNet(object):
     """Wrapper for the free FaceNet variant:
-    https://github.com/davidsandberg/facenet"""
+    https://github.com/davidsandberg/facenet
+
+    To use this class as a bob.bio.base extractor::
+
+        from bob.bio.base.extractor import Extractor
+        class FaceNetExtractor(FaceNet, Extractor):
+            pass
+        extractor = FaceNetExtractor()
+    """
 
     def __init__(self,
                  model_path=None,
@@ -143,7 +151,7 @@ class FaceNet(object):
                     "{} ...".format(url))
                 download_file(url, zip_file)
                 break
-            except Exception as e:
+            except Exception:
                 logger.warning(
                     "Could not download from the %s url", url, exc_info=True)
         else:  # else is for the for loop
