@@ -4,7 +4,7 @@
 .. image:: https://img.shields.io/badge/docs-stable-yellow.svg
    :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/stable/index.html
 .. image:: https://img.shields.io/badge/docs-latest-orange.svg
-   :target: http://beatubulatest.lab.idiap.ch/private/docs/bob/bob.ip.tensorflow_extractor/master/index.html
+   :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/master/index.html
 .. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/build.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
 .. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/coverage.svg
