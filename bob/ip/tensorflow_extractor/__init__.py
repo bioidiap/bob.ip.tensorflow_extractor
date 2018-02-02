@@ -66,6 +66,7 @@ def get_config():
 
 from .Extractor import Extractor
 from .FaceNet import FaceNet
+from .DrGanMSU import  DrGanMSUExtractor
 
 
 # gets sphinx autodoc done right - don't remove it
@@ -87,6 +88,7 @@ def __appropriate__(*args):
 __appropriate__(
     Extractor,
     FaceNet,
+    DrGanMSUExtractor,
 )
 
 # gets sphinx autodoc done right - don't remove it

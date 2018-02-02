@@ -46,6 +46,18 @@ def test_facenet():
     output = extractor(data)
     assert output.size == 128, output.shape
 
+def test_drgan():
+    """
+    '/remote/idiap.svm/user.active/heusch/work/dev/DR-GAN_code_wmodel/DR_GAN_model/DCGAN.model-590000'
+    """
+    from bob.ip.tensorflow_extractor import DrGanMSUExtractor
+    #extractor = DrGanMSUExtractor("/idiap/project/hface/models/cnn/DR_GAN_model/", image_size=[96, 96, 3])
+    extractor = DrGanMSUExtractor()
+    data = numpy.random.rand(3, 96, 96).astype("uint8")
+    output = extractor(data)
+    assert output.size == 320, output.shape
+
+
 
 """
 def test_output_from_meta():
