@@ -48,3 +48,24 @@ In this example we plot some outputs of the convolutional layer `conv1`.
 
 .. plot:: plot/convolve.py
    :include-source: False
+   
+   
+Facenet Model
+-------------
+
+
+:ref:`bob.bio.base <bob.bio.base>` wrapper Facenet model.
+Check `here for more info <py_api.html#bob.ip.tensorflow_extractor.FaceNet>`_
+
+
+
+DRGan from L.Tran @ MSU:
+------------------------
+
+:ref:`bob.bio.base <bob.bio.base>` wrapper to the DRGan model trained by L.Tran @ MSU.
+Check `here <py_api.html#bob.ip.tensorflow_extractor.DrGanMSUExtractor>`_ for more info
+
+
+
+
+
