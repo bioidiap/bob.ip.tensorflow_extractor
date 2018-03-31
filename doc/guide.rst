@@ -46,9 +46,7 @@ Using as a convolutional filter
 
 In this example we plot some outputs of the convolutional layer `conv1`.
 
-.. plot:: plot/convolve.py
-   :include-source: False
-   
+
    
 Facenet Model
 -------------
