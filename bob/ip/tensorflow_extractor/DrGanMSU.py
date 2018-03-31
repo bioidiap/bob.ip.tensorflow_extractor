@@ -5,7 +5,6 @@
 import numpy
 import tensorflow as tf
 import os
-import bob.ip.base
 import pkg_resources
 from . import download_file
 import logging
