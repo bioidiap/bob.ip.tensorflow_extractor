@@ -5,7 +5,7 @@
 import numpy
 import tensorflow as tf
 import os
-import pkg_resources
+from bob.extension import rc
 from . import download_file
 import logging
 logger = logging.getLogger(__name__)
@@ -331,7 +331,7 @@ class DrGanMSUExtractor(object):
       
     """
 
-    def __init__(self, model_path=None, image_size=[96, 96, 3]):
+    def __init__(self, model_path=rc["drgan_modelpath"], image_size=[96, 96, 3]):
 
         self.image_size = image_size
         self.session = tf.Session()

@@ -7,6 +7,8 @@ import tensorflow as tf
 from bob.ip.color import gray_to_rgb
 from bob.io.image import to_matplotlib
 from . import download_file
+from bob.extension import rc
+
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +74,7 @@ class FaceNet(object):
     """
 
     def __init__(self,
-                 model_path=None,
+                 model_path=rc["facenet_modelpath"],
                  image_size=160,
                  **kwargs):
         super(FaceNet, self).__init__()
