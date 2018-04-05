@@ -8,6 +8,7 @@ from bob.ip.color import gray_to_rgb
 from bob.io.image import to_matplotlib
 from . import download_file
 from bob.extension import rc
+from bob.extension.rc_config import _saverc
 
 
 logger = logging.getLogger(__name__)
@@ -74,7 +75,7 @@ class FaceNet(object):
     """
 
     def __init__(self,
-                 model_path=rc["facenet_modelpath"],
+                 model_path=rc["bob.ip.tensorflow_extractor.facenet_modelpath"],
                  image_size=160,
                  **kwargs):
         super(FaceNet, self).__init__()
@@ -141,10 +142,22 @@ class FaceNet(object):
         tf.reset_default_graph()
 
     @staticmethod
+    def get_rcvariable():
+        return "bob.ip.tensorflow_extractor.facenet_modelpath"
+
+    @staticmethod
     def get_modelpath():
-        import pkg_resources
-        return pkg_resources.resource_filename(__name__,
-                                               'data/FaceNet/20170512-110547')
+        
+        # Priority to the RC path
+        model_path = rc[FaceNet.get_rcvariable()]
+
+        if model_path is None:
+            import pkg_resources
+            model_path = pkg_resources.resource_filename(__name__,
+                                                         'data/FaceNet/20170512-110547')
+
+        return model_path
+
 
     @staticmethod
     def download_model():
@@ -181,6 +194,10 @@ class FaceNet(object):
         logger.info("Unziping in {0}".format(FaceNet.get_modelpath()))
         with zipfile.ZipFile(zip_file) as myzip:
             myzip.extractall(os.path.dirname(FaceNet.get_modelpath()))
+
+        logger.info("Saving the path `{0}` in the ~.bobrc file".format(FaceNet.get_modelpath()))
+        rc[FaceNet.get_rcvariable()] = FaceNet.get_modelpath()
+        _saverc(rc)
 
         # delete extra files
         os.unlink(zip_file)
