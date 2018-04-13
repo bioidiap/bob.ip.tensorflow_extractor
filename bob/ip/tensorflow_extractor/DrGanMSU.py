@@ -6,6 +6,7 @@ import numpy
 import tensorflow as tf
 import os
 from bob.extension import rc
+from bob.extension.rc_config import _saverc
 from . import download_file
 import logging
 logger = logging.getLogger(__name__)
@@ -331,7 +332,7 @@ class DrGanMSUExtractor(object):
       
     """
 
-    def __init__(self, model_path=rc["drgan_modelpath"], image_size=[96, 96, 3]):
+    def __init__(self, model_path=rc["bob.ip.tensorflow_extractor.drgan_modelpath"], image_size=[96, 96, 3]):
 
         self.image_size = image_size
         self.session = tf.Session()
@@ -363,9 +364,22 @@ class DrGanMSUExtractor(object):
 
     @staticmethod
     def get_modelpath():
-        import pkg_resources
-        return pkg_resources.resource_filename(__name__,
-                                               'data/DR_GAN_model')
+        
+        # Priority to the RC path
+        model_path = rc[DrGanMSUExtractor.get_rcvariable()]
+
+        if model_path is None:
+            import pkg_resources
+            model_path = pkg_resources.resource_filename(__name__,
+                                                 'data/DR_GAN_model')
+
+        return model_path
+
+
+    @staticmethod
+    def get_rcvariable():
+        return "bob.ip.tensorflow_extractor.drgan_modelpath"
+
 
     @staticmethod
     def download_model():
@@ -399,6 +413,10 @@ class DrGanMSUExtractor(object):
         logger.info("Unziping in {0}".format(DrGanMSUExtractor.get_modelpath()))
         with zipfile.ZipFile(zip_file) as myzip:
             myzip.extractall(os.path.dirname(DrGanMSUExtractor.get_modelpath()))
+
+        logger.info("Saving the path `{0}` in the ~.bobrc file".format(DrGanMSUExtractor.get_modelpath()))
+        rc[DrGanMSUExtractor.get_rcvariable()] = DrGanMSUExtractor.get_modelpath()
+        _saverc(rc)
 
         # delete extra files
         os.unlink(zip_file)
