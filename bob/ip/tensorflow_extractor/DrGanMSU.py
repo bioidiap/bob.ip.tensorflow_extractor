@@ -6,7 +6,6 @@ import numpy
 import tensorflow as tf
 import os
 from bob.extension import rc
-from . import download_file
 import logging
 import bob.extension.download
 import bob.io.base
@@ -358,7 +357,7 @@ class DrGanMSUExtractor(object):
                                     "DR_GAN_model.zip")
             urls = [
                 # This is a private link at Idiap to save bandwidth.
-                "http://www.idiap.ch/private/wheels/gitlab/"
+                "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
                 "DR_GAN_model.zip",
             ]
 

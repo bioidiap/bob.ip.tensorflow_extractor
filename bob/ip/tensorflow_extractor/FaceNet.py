@@ -6,7 +6,6 @@ import numpy
 import tensorflow as tf
 from bob.ip.color import gray_to_rgb
 from bob.io.image import to_matplotlib
-from . import download_file
 from bob.extension import rc
 import bob.extension.download
 import bob.io.base
@@ -77,7 +76,7 @@ class FaceNet(object):
     def __init__(self,
                  model_path=rc["bob.ip.tensorflow_extractor.facenet_modelpath"],
                  image_size=160,
-                 **kwargs):
+                 **kwargs):        
         super(FaceNet, self).__init__()
         self.model_path = model_path
         self.image_size = image_size
@@ -103,16 +102,14 @@ class FaceNet(object):
                                    "20170512-110547.zip")
             urls = [
                 # This is a private link at Idiap to save bandwidth.
-                "http://www.idiap.ch/private/wheels/gitlab/"
+                "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
                 "facenet_model2_20170512-110547.zip",
                 # this works for everybody
                 "https://drive.google.com/uc?export=download&id="
                 "0B5MzpY9kBtDVZ2RpVDYwWmxoSUk",
-            ]
-            
+            ]            
             bob.extension.download.download_and_unzip(urls, zip_file)
-            
-            
+ 
         # code from https://github.com/davidsandberg/facenet
         model_exp = os.path.expanduser(self.model_path)
         if (os.path.isfile(model_exp)):
@@ -157,10 +154,20 @@ class FaceNet(object):
 
     @staticmethod
     def get_rcvariable():
+        """
+        Variable name used in the Bob Global Configuration System
+        https://www.idiap.ch/software/bob/docs/bob/bob.extension/stable/rc.html#global-configuration-system
+        """
         return "bob.ip.tensorflow_extractor.facenet_modelpath"
 
     @staticmethod
     def get_modelpath():
+        """
+        Get default model path.        
+
+        First we try the to search this path via Global Configuration System.
+        If we can not find it, we set the path in the directory `<project>/data`
+        """
         
         # Priority to the RC path
         model_path = rc[FaceNet.get_rcvariable()]
