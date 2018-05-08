@@ -26,37 +26,6 @@ def scratch_network(inputs, end_point="fc1", reuse=False):
     return end_points[end_point]
 
 
-def download_file(url, out_file):
-    """Downloads a file from a given url
-
-    Parameters
-    ----------
-    url : str
-        The url to download form.
-    out_file : str
-        Where to save the file.
-    """
-    from bob.io.base import create_directories_safe
-    import os
-    create_directories_safe(os.path.dirname(out_file))
-
-    import sys
-    if sys.version_info[0] < 3:
-        # python2 technique for downloading a file
-        from urllib2 import urlopen
-        with open(out_file, 'wb') as f:
-            response = urlopen(url)
-            f.write(response.read())
-
-    else:
-        # python3 technique for downloading a file
-        from urllib.request import urlopen
-        from shutil import copyfileobj
-        with urlopen(url) as response:
-            with open(out_file, 'wb') as f:
-                copyfileobj(response, f)
-
-
 def get_config():
     """Returns a string containing the configuration information.
     """

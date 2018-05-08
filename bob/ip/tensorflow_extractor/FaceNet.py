@@ -6,10 +6,9 @@ import numpy
 import tensorflow as tf
 from bob.ip.color import gray_to_rgb
 from bob.io.image import to_matplotlib
-from . import download_file
 from bob.extension import rc
-from bob.extension.rc_config import _saverc
-
+import bob.extension.download
+import bob.io.base
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +76,7 @@ class FaceNet(object):
     def __init__(self,
                  model_path=rc["bob.ip.tensorflow_extractor.facenet_modelpath"],
                  image_size=160,
-                 **kwargs):
+                 **kwargs):        
         super(FaceNet, self).__init__()
         self.model_path = model_path
         self.image_size = image_size
@@ -98,7 +97,19 @@ class FaceNet(object):
         if self.model_path is None:
             self.model_path = self.get_modelpath()
         if not os.path.exists(self.model_path):
-            self.download_model()
+            bob.io.base.create_directories_safe(FaceNet.get_modelpath())
+            zip_file = os.path.join(FaceNet.get_modelpath(),
+                                   "20170512-110547.zip")
+            urls = [
+                # This is a private link at Idiap to save bandwidth.
+                "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
+                "facenet_model2_20170512-110547.zip",
+                # this works for everybody
+                "https://drive.google.com/uc?export=download&id="
+                "0B5MzpY9kBtDVZ2RpVDYwWmxoSUk",
+            ]            
+            bob.extension.download.download_and_unzip(urls, zip_file)
+ 
         # code from https://github.com/davidsandberg/facenet
         model_exp = os.path.expanduser(self.model_path)
         if (os.path.isfile(model_exp)):
@@ -143,10 +154,20 @@ class FaceNet(object):
 
     @staticmethod
     def get_rcvariable():
+        """
+        Variable name used in the Bob Global Configuration System
+        https://www.idiap.ch/software/bob/docs/bob/bob.extension/stable/rc.html#global-configuration-system
+        """
         return "bob.ip.tensorflow_extractor.facenet_modelpath"
 
     @staticmethod
     def get_modelpath():
+        """
+        Get default model path.        
+
+        First we try the to search this path via Global Configuration System.
+        If we can not find it, we set the path in the directory `<project>/data`
+        """
         
         # Priority to the RC path
         model_path = rc[FaceNet.get_rcvariable()]
@@ -158,46 +179,3 @@ class FaceNet(object):
 
         return model_path
 
-
-    @staticmethod
-    def download_model():
-        """
-        Download and extract the FaceNet files in bob/ip/tensorflow_extractor
-        """
-        import zipfile
-        zip_file = os.path.join(FaceNet.get_modelpath(),
-                                "20170512-110547.zip")
-        urls = [
-            # This is a private link at Idiap to save bandwidth.
-            "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
-            "facenet_model2_20170512-110547.zip",
-            # this works for everybody
-            "https://drive.google.com/uc?export=download&id="
-            "0B5MzpY9kBtDVZ2RpVDYwWmxoSUk",
-        ]
-
-        for url in urls:
-            try:
-                logger.info(
-                    "Downloading the FaceNet model from "
-                    "{} ...".format(url))
-                download_file(url, zip_file)
-                break
-            except Exception:
-                logger.warning(
-                    "Could not download from the %s url", url, exc_info=True)
-        else:  # else is for the for loop
-            if not os.path.isfile(zip_file):
-                raise RuntimeError("Could not download the zip file.")
-
-        # Unzip
-        logger.info("Unziping in {0}".format(FaceNet.get_modelpath()))
-        with zipfile.ZipFile(zip_file) as myzip:
-            myzip.extractall(os.path.dirname(FaceNet.get_modelpath()))
-
-        logger.info("Saving the path `{0}` in the ~.bobrc file".format(FaceNet.get_modelpath()))
-        rc[FaceNet.get_rcvariable()] = FaceNet.get_modelpath()
-        _saverc(rc)
-
-        # delete extra files
-        os.unlink(zip_file)
