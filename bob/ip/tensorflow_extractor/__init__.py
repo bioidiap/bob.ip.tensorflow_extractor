@@ -36,6 +36,7 @@ def get_config():
 from .Extractor import Extractor
 from .FaceNet import FaceNet
 from .DrGanMSU import  DrGanMSUExtractor
+from .Vgg16 import VGGFace, vgg_16
 
 
 # gets sphinx autodoc done right - don't remove it
@@ -58,6 +59,7 @@ __appropriate__(
     Extractor,
     FaceNet,
     DrGanMSUExtractor,
+    VGGFace
 )
 
 # gets sphinx autodoc done right - don't remove it
