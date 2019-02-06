@@ -53,3 +53,10 @@ def test_drgan():
     output = extractor(data)
     assert output.size == 320, output.shape
 
+def test_vgg16():
+    from bob.ip.tensorflow_extractor import VGGFace
+    extractor = VGGFace()
+    data = numpy.random.rand(3, 224, 224).astype("uint8")
+    output = extractor(data)
+    assert output.size == 4096, output.shape
+
