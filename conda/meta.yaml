@@ -25,12 +25,14 @@ requirements:
     - bob.db.mnist
     - bob.ip.color
     - six {{ six }}
+    - tensorflow {{ tensorflow }}
+    - numpy {{ numpy }}
   run:
     - python
     - setuptools
-    - scipy
     - six
-    - tensorflow >=1.2.1
+    - {{ pin_compatible('tensorflow') }}
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
@@ -47,7 +49,6 @@ test:
     - coverage
     - sphinx
     - sphinx_rtd_theme
-    - bob.io.image
     - bob.db.atnt
     - matplotlib
     - gridtk

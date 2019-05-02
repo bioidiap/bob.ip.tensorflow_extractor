@@ -12,3 +12,6 @@ develop-eggs
 sphinx
 dist
 bob/ip/tensorflow_extractor/data/FaceNet/
+record.txt
+build/
+bob/ip/tensorflow_extractor/data/DR_GAN_model/
