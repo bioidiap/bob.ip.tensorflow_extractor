@@ -93,7 +93,7 @@ class MTCNN:
         list
             A list of annotations. Annotations are dictionaries that contain the
             following keys: ``topleft``, ``bottomright``, ``reye``, ``leye``, ``nose``,
-            ``right_of_mouth``, ``left_of_mouth``, and ``quality``.
+            ``mouthright``, ``mouthleft``, and ``quality``.
         """
         boxes, scores, landmarks = self.detect(img)
         annots = []
@@ -103,8 +103,8 @@ class MTCNN:
             right_eye = lm[0], lm[5]
             left_eye = lm[1], lm[6]
             nose = lm[2], lm[7]
-            right_of_mouth = lm[3], lm[8]
-            left_of_mouth = lm[4], lm[9]
+            mouthright = lm[3], lm[8]
+            mouthleft = lm[4], lm[9]
             annots.append(
                 {
                     "topleft": topleft,
@@ -112,8 +112,8 @@ class MTCNN:
                     "reye": right_eye,
                     "leye": left_eye,
                     "nose": nose,
-                    "right_of_mouth": right_of_mouth,
-                    "left_of_mouth": left_of_mouth,
+                    "mouthright": mouthright,
+                    "mouthleft": mouthleft,
                     "quality": prob,
                 }
             )

@@ -90,6 +90,7 @@ def test_mtcnn():
 
     annots = mtcnn.annotations(img)
     ref_annots = json.load(open(ref_annots))
+    assert len(annots) == len(ref_annots), (len(annots), len(ref_annots))
     for a, aref in zip(annots, ref_annots):
         for k, v in a.items():
             vref = aref[k]

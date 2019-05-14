@@ -35,8 +35,8 @@ for annotations in detections:
         ("reye", "r"),
         ("leye", "g"),
         ("nose", "b"),
-        ("right_of_mouth", "k"),
-        ("left_of_mouth", "w"),
+        ("mouthright", "k"),
+        ("mouthleft", "w"),
     ):
         plt.gca().add_patch(
             Circle(
