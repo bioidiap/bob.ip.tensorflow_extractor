@@ -63,12 +63,12 @@ class Extractor(object):
 
         Parameters
         ----------
-        image : numpy.array
+        image : numpy.ndarray
             Input Data
 
         Returns
         -------
-        numpy.array
+        numpy.ndarray
             The features.
 
         """

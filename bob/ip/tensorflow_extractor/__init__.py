@@ -37,6 +37,7 @@ from .Extractor import Extractor
 from .FaceNet import FaceNet
 from .DrGanMSU import  DrGanMSUExtractor
 from .Vgg16 import VGGFace, vgg_16
+from .MTCNN import MTCNN
 
 
 # gets sphinx autodoc done right - don't remove it
@@ -59,7 +60,8 @@ __appropriate__(
     Extractor,
     FaceNet,
     DrGanMSUExtractor,
-    VGGFace
+    VGGFace,
+    MTCNN,
 )
 
 # gets sphinx autodoc done right - don't remove it

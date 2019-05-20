@@ -16,4 +16,5 @@ Tensorflow http://tensorflow.org/
    :maxdepth: 2
 
    guide
+   face_detect
    py_api

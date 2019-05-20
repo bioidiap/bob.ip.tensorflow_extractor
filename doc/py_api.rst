@@ -9,6 +9,7 @@ Classes
 .. autosummary::
     bob.ip.tensorflow_extractor.Extractor
     bob.ip.tensorflow_extractor.FaceNet
+    bob.ip.tensorflow_extractor.MTCNN
 
 
 Detailed API
