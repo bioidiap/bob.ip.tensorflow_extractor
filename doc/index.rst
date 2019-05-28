@@ -8,8 +8,8 @@
 This package contains functionality to extract features from CNNs trained with
 Tensorflow http://tensorflow.org/
 
- Index
-=======
+Index
+=====
 
 .. toctree::
    :maxdepth: 2
