@@ -107,9 +107,10 @@ class FaceNet(object):
                 # This is a private link at Idiap to save bandwidth.
                 "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
                 "facenet_model2_20170512-110547.zip",
-                # this works for everybody
-                "https://drive.google.com/uc?export=download&id="
-                "0B5MzpY9kBtDVZ2RpVDYwWmxoSUk",
+                # this link to dropbox would work for everybody
+                # previous link to gogle drive would require cookies
+                "https://www.dropbox.com/s/"
+                "k7bhxe58q7d48g7/facenet_model2_20170512-110547.zip?dl=1",
             ]
             bob.extension.download.download_and_unzip(urls, zip_file)
 
