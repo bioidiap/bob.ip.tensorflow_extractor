@@ -1,46 +1,10 @@
 import bob.io.base
 import bob.io.image
 from bob.io.base.test_utils import datafile
-import bob.ip.tensorflow_extractor
-import tensorflow as tf
-
-import pkg_resources
 import numpy
 import json
-import os
 
 numpy.random.seed(10)
-
-slim = tf.contrib.slim
-from . import scratch_network
-
-
-def test_output():
-
-    # Loading MNIST model
-    filename = os.path.join(
-        pkg_resources.resource_filename(__name__, "data"), "model.ckp"
-    )
-    inputs = tf.placeholder(tf.float32, shape=(None, 28, 28, 1))
-
-    # Testing the last output
-    graph = scratch_network(inputs)
-    extractor = bob.ip.tensorflow_extractor.Extractor(filename, inputs, graph)
-
-    data = numpy.random.rand(2, 28, 28, 1).astype("float32")
-    output = extractor(data)
-    assert extractor(data).shape == (2, 10)
-    del extractor
-
-    # Testing flatten
-    inputs = tf.placeholder(tf.float32, shape=(None, 28, 28, 1))
-    graph = scratch_network(inputs, end_point="flatten1")
-    extractor = bob.ip.tensorflow_extractor.Extractor(filename, inputs, graph)
-
-    data = numpy.random.rand(2, 28, 28, 1).astype("float32")
-    output = extractor(data)
-    assert output.shape == (2, 1690)
-    del extractor
 
 
 def test_facenet():
@@ -50,24 +14,6 @@ def test_facenet():
     data = numpy.random.rand(3, 160, 160).astype("uint8")
     output = extractor(data)
     assert output.size == 128, output.shape
-
-
-def test_drgan():
-    from bob.ip.tensorflow_extractor import DrGanMSUExtractor
-
-    extractor = DrGanMSUExtractor()
-    data = numpy.random.rand(3, 96, 96).astype("uint8")
-    output = extractor(data)
-    assert output.size == 320, output.shape
-
-
-def test_vgg16():
-    pass
-    # from bob.ip.tensorflow_extractor import VGGFace
-    # extractor = VGGFace()
-    # data = numpy.random.rand(3, 224, 224).astype("uint8")
-    # output = extractor(data)
-    # assert output.size == 4096, output.shape
 
 
 def test_mtcnn():
