@@ -39,14 +39,14 @@ class MTCNN:
         graph = tf.Graph()
         with graph.as_default():
             with open(model_path, "rb") as f:
-                graph_def = tf.GraphDef.FromString(f.read())
+                graph_def = tf.compat.v1.GraphDef.FromString(f.read())
                 tf.import_graph_def(graph_def, name="")
         self.graph = graph
-        config = tf.ConfigProto(
+        config = tf.compat.v1.ConfigProto(
             intra_op_parallelism_threads=multiprocessing.cpu_count(),
             inter_op_parallelism_threads=multiprocessing.cpu_count(),
         )
-        self.sess = tf.Session(graph=graph, config=config)
+        self.sess = tf.compat.v1.Session(graph=graph, config=config)
 
     def detect(self, img):
         """Detects all faces in the image.

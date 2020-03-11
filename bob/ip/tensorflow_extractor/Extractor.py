@@ -35,14 +35,17 @@ class Extractor(object):
         self.graph = graph
 
         # Initializing the variables of the current graph
-        self.session = tf.Session()
-        self.session.run(tf.global_variables_initializer())
+        self.session = tf.compat.v1.Session()
+        self.session.run(tf.compat.v1.global_variables_initializer())
 
         # Loading the last checkpoint and overwriting the current variables
-        saver = tf.train.Saver()
+        saver = tf.compat.v1.train.Saver()
 
         if os.path.splitext(checkpoint_filename)[1] == ".meta":
-            saver.restore(self.session, tf.train.latest_checkpoint(os.path.dirname(checkpoint_filename)))
+            saver.restore(
+                self.session,
+                tf.train.latest_checkpoint(os.path.dirname(checkpoint_filename)),
+            )
         elif os.path.isdir(checkpoint_filename):
             saver.restore(self.session, tf.train.latest_checkpoint(checkpoint_filename))
         else:
@@ -52,10 +55,8 @@ class Extractor(object):
         if debug:
             self.session = tf_debug.LocalCLIDebugWrapperSession(self.session)
 
-
     def __del__(self):
-        tf.reset_default_graph()
-
+        tf.compat.v1.reset_default_graph()
 
     def __call__(self, data):
         """
@@ -73,4 +74,3 @@ class Extractor(object):
 
         """
         return self.session.run(self.graph, feed_dict={self.input_tensor: data})
-

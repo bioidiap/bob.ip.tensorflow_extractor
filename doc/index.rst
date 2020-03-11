@@ -5,7 +5,7 @@
  Bob interface for feature extraction using Tensorflow
 =======================================================
 
-This package contains functionality to extract features from CNNs trained with
+This package contains functionality to extract features from Neural Networks trained with
 Tensorflow http://tensorflow.org/
 
 Index

@@ -12,6 +12,8 @@ import bob.io.base
 
 logger = logging.getLogger(__name__)
 
+FACENET_MODELPATH_KEY = "bob.ip.tensorflow_extractor.facenet_modelpath"
+
 
 def prewhiten(img):
     mean = numpy.mean(img)
@@ -24,18 +26,18 @@ def prewhiten(img):
 def get_model_filenames(model_dir):
     # code from https://github.com/davidsandberg/facenet
     files = os.listdir(model_dir)
-    meta_files = [s for s in files if s.endswith('.meta')]
+    meta_files = [s for s in files if s.endswith(".meta")]
     if len(meta_files) == 0:
-        raise ValueError(
-            'No meta file found in the model directory (%s)' % model_dir)
+        raise ValueError("No meta file found in the model directory (%s)" % model_dir)
     elif len(meta_files) > 1:
         raise ValueError(
-            'There should not be more than one meta file in the model '
-            'directory (%s)' % model_dir)
+            "There should not be more than one meta file in the model "
+            "directory (%s)" % model_dir
+        )
     meta_file = meta_files[0]
     max_step = -1
     for f in files:
-        step_str = re.match(r'(^model-[\w\- ]+.ckpt-(\d+))', f)
+        step_str = re.match(r"(^model-[\w\- ]+.ckpt-(\d+))", f)
         if step_str is not None and len(step_str.groups()) >= 2:
             step = int(step_str.groups()[1])
             if step > max_step:
@@ -74,11 +76,12 @@ class FaceNet(object):
     """
 
     def __init__(
-            self,
-            model_path=rc["bob.ip.tensorflow_extractor.facenet_modelpath"],
-            image_size=160,
-            layer_name='embeddings:0',
-            **kwargs):
+        self,
+        model_path=rc[FACENET_MODELPATH_KEY],
+        image_size=160,
+        layer_name="embeddings:0",
+        **kwargs
+    ):
         super(FaceNet, self).__init__()
         self.model_path = model_path
         self.image_size = image_size
@@ -101,14 +104,12 @@ class FaceNet(object):
             self.model_path = self.get_modelpath()
         if not os.path.exists(self.model_path):
             bob.io.base.create_directories_safe(FaceNet.get_modelpath())
-            zip_file = os.path.join(FaceNet.get_modelpath(),
-                                    "20170512-110547.zip")
+            zip_file = os.path.join(FaceNet.get_modelpath(), "20170512-110547.zip")
             urls = [
-                # This is a private link at Idiap to save bandwidth.
-                "http://beatubulatest.lab.idiap.ch/private/wheels/gitlab/"
+                # This link only works in Idiap CI to save bandwidth.
+                "http://www.idiap.ch/private/wheels/gitlab/"
                 "facenet_model2_20170512-110547.zip",
                 # this link to dropbox would work for everybody
-                # previous link to gogle drive would require cookies
                 "https://www.dropbox.com/s/"
                 "k7bhxe58q7d48g7/facenet_model2_20170512-110547.zip?dl=1",
             ]
@@ -117,50 +118,42 @@ class FaceNet(object):
         # code from https://github.com/davidsandberg/facenet
         model_exp = os.path.expanduser(self.model_path)
         with self.graph.as_default():
-            if (os.path.isfile(model_exp)):
-                logger.info('Model filename: %s' % model_exp)
-                with tf.gfile.FastGFile(model_exp, 'rb') as f:
-                    graph_def = tf.GraphDef()
+            if os.path.isfile(model_exp):
+                logger.info("Model filename: %s" % model_exp)
+                with tf.compat.v1.gfile.FastGFile(model_exp, "rb") as f:
+                    graph_def = tf.compat.v1.GraphDef()
                     graph_def.ParseFromString(f.read())
-                    tf.import_graph_def(graph_def, name='')
+                    tf.import_graph_def(graph_def, name="")
             else:
-                logger.info('Model directory: %s' % model_exp)
+                logger.info("Model directory: %s" % model_exp)
                 meta_file, ckpt_file = get_model_filenames(model_exp)
 
-                logger.info('Metagraph file: %s' % meta_file)
-                logger.info('Checkpoint file: %s' % ckpt_file)
+                logger.info("Metagraph file: %s" % meta_file)
+                logger.info("Checkpoint file: %s" % ckpt_file)
 
-                saver = tf.train.import_meta_graph(
-                    os.path.join(model_exp, meta_file))
-                saver.restore(self.session,
-                              os.path.join(model_exp, ckpt_file))
+                saver = tf.compat.v1.train.import_meta_graph(
+                    os.path.join(model_exp, meta_file)
+                )
+                saver.restore(self.session, os.path.join(model_exp, ckpt_file))
         # Get input and output tensors
         self.images_placeholder = self.graph.get_tensor_by_name("input:0")
         self.embeddings = self.graph.get_tensor_by_name(self.layer_name)
-        self.phase_train_placeholder = self.graph.get_tensor_by_name(
-            "phase_train:0")
+        self.phase_train_placeholder = self.graph.get_tensor_by_name("phase_train:0")
         logger.info("Successfully loaded the model.")
 
     def __call__(self, img):
         images = self._check_feature(img)
         if self.session is None:
             self.graph = tf.Graph()
-            self.session = tf.Session(graph=self.graph)
+            self.session = tf.compat.v1.Session(graph=self.graph)
         if self.embeddings is None:
             self.load_model()
-        feed_dict = {self.images_placeholder: images,
-                     self.phase_train_placeholder: False}
-        features = self.session.run(
-            self.embeddings, feed_dict=feed_dict)
+        feed_dict = {
+            self.images_placeholder: images,
+            self.phase_train_placeholder: False,
+        }
+        features = self.session.run(self.embeddings, feed_dict=feed_dict)
         return features.flatten()
-
-    @staticmethod
-    def get_rcvariable():
-        """
-        Variable name used in the Bob Global Configuration System
-        https://www.idiap.ch/software/bob/docs/bob/bob.extension/stable/rc.html
-        """
-        return "bob.ip.tensorflow_extractor.facenet_modelpath"
 
     @staticmethod
     def get_modelpath():
@@ -173,11 +166,13 @@ class FaceNet(object):
         """
 
         # Priority to the RC path
-        model_path = rc[FaceNet.get_rcvariable()]
+        model_path = rc["bob.ip.tensorflow_extractor.facenet_modelpath"]
 
         if model_path is None:
             import pkg_resources
+
             model_path = pkg_resources.resource_filename(
-                __name__, 'data/FaceNet/20170512-110547')
+                __name__, "data/FaceNet/20170512-110547"
+            )
 
         return model_path
