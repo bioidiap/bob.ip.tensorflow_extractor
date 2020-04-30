@@ -1,7 +1,7 @@
 .. vim: set fileencoding=utf-8 :
 .. Thu Jul 20 12:30:48 CEST 2017
 
-.. image:: https://img.shields.io/badge/docs-available-orage.svg
+.. image:: https://img.shields.io/badge/docs-available-orange.svg
    :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/master/index.html
 .. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/pipeline.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
