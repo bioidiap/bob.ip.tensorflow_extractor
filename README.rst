@@ -1,18 +1,14 @@
 .. vim: set fileencoding=utf-8 :
 .. Thu Jul 20 12:30:48 CEST 2017
 
-.. image:: https://img.shields.io/badge/docs-stable-yellow.svg
-   :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/stable/index.html
-.. image:: https://img.shields.io/badge/docs-latest-orange.svg
+.. image:: https://img.shields.io/badge/docs-available-orage.svg
    :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/master/index.html
-.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/build.svg
+.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/pipeline.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
 .. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/coverage.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor
-.. image:: https://img.shields.io/pypi/v/bob.ip.tensorflow_extractor.svg
-   :target: https://pypi.python.org/pypi/bob.ip.tensorflow_extractor
 
 
 ======================================================
