@@ -3,10 +3,10 @@
 
 .. image:: https://img.shields.io/badge/docs-available-orange.svg
    :target: https://www.idiap.ch/software/bob/docs/bob/bob.ip.tensorflow_extractor/master/index.html
-.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/v0.0.7/pipeline.svg
-   :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/v0.0.7
-.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/v0.0.7/coverage.svg
-   :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/v0.0.7
+.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/pipeline.svg
+   :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
+.. image:: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/badges/master/coverage.svg
+   :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.ip.tensorflow_extractor
 
